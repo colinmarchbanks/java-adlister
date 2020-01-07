@@ -1,4 +1,4 @@
-package main.java;
+//package main.java;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +14,7 @@ public class HelloWorldServlet extends HttpServlet {
     // Server the GET request to say hello
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         String name = req.getParameter("name");
+        String cat = req.getParameter("cat");
         if (name == null || name.equals("")) {
             res.setContentType("text/html");
             PrintWriter pw = res.getWriter();
@@ -22,6 +23,12 @@ public class HelloWorldServlet extends HttpServlet {
             res.setContentType("text/html");
             PrintWriter pw = res.getWriter();
             pw.println("<h1>Hello, "+name+"!</h1>");
+
+        }
+        if (cat != null && !cat.equals("")) {
+            res.setContentType("text/html");
+            PrintWriter pw = res.getWriter();
+            pw.println("<h1>Meow meow meow</h1>");
         }
     }
 }
