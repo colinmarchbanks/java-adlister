@@ -21,7 +21,7 @@ public class HelloWorldServlet extends HttpServlet {
         } else {
             res.setContentType("text/html");
             PrintWriter pw = res.getWriter();
-            pw.println("<h1>Hello, "+name+"!</h1>");
+            pw.println("<h1>Hello, " + name + "!</h1>");
         }
     }
 }
