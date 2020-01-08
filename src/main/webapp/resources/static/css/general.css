@@ -3,30 +3,40 @@
     margin-left: 10px;
     margin-right: 10px;
     margin-top: 10px;
-    background-color: aqua;
+    background-color: teal;
     min-height: 3rem;
     min-width: 98%;
     font-size: 3rem;
-    color: red;
+    color: black;
     text-align: center;
-    border: 3px black solid;
+    border: 1px black solid;
+}
+
+.banner:hover{
+    color:teal;
+    background-color: green;
 }
 
 .side-nav {
     float: left;
-    margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 30px;
+    padding-left: 5px;
     width: 8rem;
-    padding-left: 10px;
-    padding-top: 100px;
+    padding-top: 25px;
     line-height: 200%;
     font-size: 1.5rem;
-    border: 3px black solid;
-    background-color: blue;
+    border: 1px black solid;
+    background-color: seagreen;
     min-height: 50%;
 }
 
 .side-nav a {
     color: bisque;
+    text-decoration: none;
+}
+
+.side-nav a:hover {
+    color: red;
+    text-decoration: underline;
 }
