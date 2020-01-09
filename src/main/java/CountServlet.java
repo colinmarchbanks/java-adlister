@@ -7,13 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Timer;
+import java.util.TimerTask;
 
 @WebServlet(name = "CountServlet", urlPatterns = "/count")
 public class CountServlet extends HttpServlet {
 
     // set static counter
     private static int count = 0;
-
     // Server the GET request to say hello
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         String reset = req.getParameter("reset");
@@ -25,5 +26,8 @@ public class CountServlet extends HttpServlet {
             pw.println("<h1>The count has been reset!</h1>");
         }
         pw.println("<h1>The count is: " + count + "</h1>");
+        res.setHeader("Refresh", "10; URL=http://localhost:8080/count");
+
+
     }
 }
