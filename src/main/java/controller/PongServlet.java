@@ -1,4 +1,4 @@
-package main.java;
+package controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,14 +8,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "NameSevlet", urlPatterns = "/name")
-public class NameServlet extends HttpServlet {
+@WebServlet(name = "PongServlet", urlPatterns = "/pong")
+public class PongServlet extends HttpServlet {
 
-
+    int pong =0;
 
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         res.setContentType("text/html");
         PrintWriter pw = res.getWriter();
-        pw.println("<h1>Colin Marchbanks</h1>");
+        pw.println("<h1>" + pong + " pongs</h1>");
+        pong++;
+        pw.println("<form method=\"get\" action=\"./ping\">\n" +
+                "\n" +
+                "                    <button type=\"submit\">Pong</button>\n" +
+                "\n" +
+                "                </form>");
     }
 }
