@@ -1,8 +1,13 @@
+package contactsControllers;
+
 public class Contact {
     private long id;
     private String firstName;
     private String lastName;
     private String phone;
+
+    public Contact() {
+    }
 
     public Contact(int id, String firstName, String lastName, String phone) {
         this.id = id;

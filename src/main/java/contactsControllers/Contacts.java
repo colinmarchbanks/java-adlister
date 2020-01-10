@@ -1,3 +1,5 @@
+package contactsControllers;
+
 import java.util.List;
 
 public interface Contacts {
