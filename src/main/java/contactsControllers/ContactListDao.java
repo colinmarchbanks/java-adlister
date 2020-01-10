@@ -6,7 +6,7 @@ import java.util.List;
 // TODO: create a contactsControllers.Contacts interface with the required methods
 // TODO: add a method to the Dao.DaoFactory to get an implementation of the contacts DAO
 // TODO: create the needed controller and view code to give the user an interface that will CRUD contacts
-public class ContactListDao implements Contacts {
+public class    ContactListDao implements Contacts {
     private List<Contact> contacts = new ArrayList<>();
     // initially seed contacts
     public ContactListDao() {
@@ -15,6 +15,7 @@ public class ContactListDao implements Contacts {
         contacts.add(new Contact(3, "Sarah", "Conner", "2105551010"));
         contacts.add(new Contact(4, "Kyle", "Reese", "2105551111"));
     }
+
     @Override
     public List<Contact> getContacts() {
         return contacts;
@@ -25,7 +26,7 @@ public class ContactListDao implements Contacts {
             contact.setId(contacts.size() + 1);
             contacts.add(contact);
         } else {
-            contacts.set((int) contact.getId(), contact);
+            contacts.set((int) contact.getId() - 1, contact);
         }
         return contact.getId();
     }
@@ -90,5 +91,6 @@ public class ContactListDao implements Contacts {
         for (Contact contact : allContacts) {
             System.out.println(contact.getFirstName());
         }
+
     }
 }

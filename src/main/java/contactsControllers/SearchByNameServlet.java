@@ -10,17 +10,19 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/contacts")
-public class ContactsServlet extends HttpServlet{
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+@WebServlet("/contact/search")
+public class SearchByNameServlet extends HttpServlet{
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Contacts contactsDao = DaoFactory.getContactsDao();
         List<Contact> contacts = contactsDao.getContacts();
-        if(request.getParameter("contacts") != null && !request.getParameter("contacts").equals(""))
-        {
-            request.setAttribute("contacts", request.getParameter("contacts"));
-        }else {
-            request.setAttribute("contacts", contacts);
+        Contact contactSearched = null;
+        for(Contact contact : contacts){
+            if(contact.getFirstName().equalsIgnoreCase(request.getParameter("name"))){
+                contactSearched = contact;
+            }
         }
+        request.setAttribute("searched", contactSearched);
         request.getRequestDispatcher("/contacts/index.jsp").forward(request, response);
     }
 }
+

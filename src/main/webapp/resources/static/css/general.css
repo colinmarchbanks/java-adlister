@@ -5,7 +5,7 @@
     margin-top: 10px;
     background-color: teal;
     min-height: 3rem;
-    min-width: 98%;
+    min-width: 100%;
     font-size: 3rem;
     color: black;
     text-align: center;
@@ -21,6 +21,7 @@
     float: left;
     margin-right: 10px;
     margin-bottom: 30px;
+    margin-left: 10px;
     padding-left: 5px;
     width: 8rem;
     padding-top: 25px;
@@ -28,7 +29,7 @@
     font-size: 1.5rem;
     border: 1px black solid;
     background-color: seagreen;
-    min-height: 50%;
+    min-height: 100vh;
 }
 
 .side-nav a {

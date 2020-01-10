@@ -54,4 +54,5 @@ public class Contact {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
 }
