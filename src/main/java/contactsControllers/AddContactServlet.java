@@ -14,8 +14,8 @@ import java.util.List;
 public class AddContactServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Contacts contactsDao = DaoFactory.getContactsDao();
+        contactsDao.saveContact(new Contact(request.getParameter("firstName"),request.getParameter("lastName"),request.getParameter("phone")));
         List<Contact> contacts = contactsDao.getContacts();
-        contacts.add(new Contact(request.getParameter("firstName"),request.getParameter("lastName"),request.getParameter("phone")));
         request.setAttribute("contacts", contacts);
         request.getRequestDispatcher("/contacts/index.jsp").forward(request, response);
     }

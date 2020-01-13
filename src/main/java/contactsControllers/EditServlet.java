@@ -17,16 +17,20 @@ import java.util.List;
 public class EditServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Contacts contactsDao = DaoFactory.getContactsDao();
-        List<Contact> contacts = contactsDao.getContacts();
-        List<Contact> updatedContacts = new ArrayList<>();
-        for(Contact contact : contacts){
-            if(!contact.getFirstName().equalsIgnoreCase(request.getParameter("nameToEdit"))){
-                updatedContacts.add(contact);
-            }else{
-                updatedContacts.add(new Contact(request.getParameter("firstName"),request.getParameter("lastName"),request.getParameter("phone")));
+        List<Contact> contactsToSearch = contactsDao.getContacts();
+        long id = -1;
+        for(Contact contact : contactsToSearch){
+            if(contact.getFirstName().equalsIgnoreCase(request.getParameter("nameToEdit"))){
+                id = contact.getId();
             }
         }
-        request.setAttribute("contacts", updatedContacts);
+        Contact editContact = contactsDao.getContactById(id);
+        editContact.setFirstName(request.getParameter("firstName"));
+        editContact.setLastName(request.getParameter("lastName"));
+        editContact.setPhone(request.getParameter("phone"));
+        contactsDao.saveContact(editContact);
+        List<Contact> contacts = contactsDao.getContacts();
+        request.setAttribute("contacts", contacts);
         request.getRequestDispatcher("/contacts/index.jsp").forward(request, response);
     }
 }

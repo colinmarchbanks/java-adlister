@@ -27,10 +27,16 @@
 
             <c:choose>
 
-                <c:when test="${contacts == null}">
+                <c:when test="${contacts == null && numberOfContacts == null}">
                     <div class="col-md-6">
                         <h2>${searched.firstName} ${searched.lastName}</h2>
                         <p>${searched.phone}</p>
+                    </div>
+                    <a href="${pageContext.request.contextPath}/contacts"><button type="button">Reset Results</button></a>
+                </c:when>
+                <c:when test="${contacts == null && numberOfContacts != null}">
+                    <div class="col-md-6">
+                        <h2>${numberOfContacts} is the number of contacts</h2>
                     </div>
                     <a href="${pageContext.request.contextPath}/contacts"><button type="button">Reset Results</button></a>
                 </c:when>
@@ -106,6 +112,15 @@
                 <br><br>
 
                 <button type="submit">Edit Contact</button>
+
+            </form>
+
+            <h1>Count Contacts</h1>
+
+            <form method="post" action="${pageContext.request.contextPath}/contact/count">
+
+                <label for="name"><b>Count contacts</b></label>
+                <button type="submit">Go!</button>
 
             </form>
 

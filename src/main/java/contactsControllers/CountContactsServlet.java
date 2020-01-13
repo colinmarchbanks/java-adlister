@@ -8,23 +8,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/contact/delete")
-public class DeleteContactServlet extends HttpServlet{
+@WebServlet("/contact/count")
+public class CountContactsServlet extends HttpServlet{
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Contacts contactsDao = DaoFactory.getContactsDao();
-        long deletion = -1;
-        List<Contact> contactsToSearchThrough = contactsDao.getContacts();
-        for(Contact contact : contactsToSearchThrough){
-            if(contact.getFirstName().equalsIgnoreCase(request.getParameter("name"))){
-                deletion = contact.getId();
-            }
-        }
-        contactsDao.deleteContactById(deletion);
         List<Contact> contacts = contactsDao.getContacts();
-        request.setAttribute("contacts", contacts);
+        int count = 0;
+        for(int i =0; i < contacts.size(); i++){
+            count++;
+        }
+        request.setAttribute("numberOfContacts", count);
         request.getRequestDispatcher("/contacts/index.jsp").forward(request, response);
     }
 }
