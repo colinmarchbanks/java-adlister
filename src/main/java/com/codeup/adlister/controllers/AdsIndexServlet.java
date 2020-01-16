@@ -1,6 +1,9 @@
 package com.codeup.adlister.controllers;
 
+import com.codeup.adlister.Config.Config;
 import com.codeup.adlister.dao.DaoFactory;
+import com.codeup.adlister.dao.MySQLAdsDao;
+import com.codeup.adlister.models.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +16,13 @@ import java.io.IOException;
 public class AdsIndexServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("ads", DaoFactory.getAdsDao().all());
+        Config config = new Config();
+        MySQLAdsDao adsDao = new MySQLAdsDao(config);
+        User user = (User) request.getSession().getAttribute("user");
+        request.setAttribute("usernamesByAds",adsDao.usernamesFromAds());
+        if(user != null){
+            request.getSession().setAttribute("user",user);
+        }
         request.getRequestDispatcher("/WEB-INF/ads/index.jsp").forward(request, response);
     }
 }

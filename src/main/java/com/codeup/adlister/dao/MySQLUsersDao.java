@@ -1,9 +1,13 @@
 package com.codeup.adlister.dao;
 
+import com.codeup.adlister.Config.Config;
+import com.codeup.adlister.models.Ad;
 import com.codeup.adlister.models.User;
 import com.mysql.cj.jdbc.Driver;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MySQLUsersDao implements Users {
     private Connection connection;
@@ -13,7 +17,7 @@ public class MySQLUsersDao implements Users {
             DriverManager.registerDriver(new Driver());
             connection = DriverManager.getConnection(
                 config.getUrl(),
-                config.getUser(),
+                config.getUsername(),
                 config.getPassword()
             );
         } catch (SQLException e) {
@@ -51,6 +55,17 @@ public class MySQLUsersDao implements Users {
         }
     }
 
+    public List<User> all() {
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement("SELECT * FROM users");
+            ResultSet rs = stmt.executeQuery();
+            return createUsersFromResults(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving all ads.", e);
+        }
+    }
+
     private User extractUser(ResultSet rs) throws SQLException {
         if (! rs.next()) {
             return null;
@@ -61,6 +76,14 @@ public class MySQLUsersDao implements Users {
             rs.getString("email"),
             rs.getString("password")
         );
+    }
+
+    private List<User> createUsersFromResults(ResultSet rs) throws SQLException {
+        List<User> users = new ArrayList<>();
+        while (rs.next()) {
+            users.add(extractUser(rs));
+        }
+        return users;
     }
 
 }

@@ -1,6 +1,8 @@
 package com.codeup.adlister.dao;
 
+import com.codeup.adlister.Config.Config;
 import com.codeup.adlister.models.Ad;
+import com.codeup.adlister.models.User;
 import com.mysql.cj.jdbc.Driver;
 
 import java.io.FileInputStream;
@@ -18,12 +20,28 @@ public class MySQLAdsDao implements Ads {
             DriverManager.registerDriver(new Driver());
             connection = DriverManager.getConnection(
                 config.getUrl(),
-                config.getUser(),
+                config.getUsername(),
                 config.getPassword()
             );
         } catch (SQLException e) {
             throw new RuntimeException("Error connecting to the database!", e);
         }
+    }
+
+    public List<Integer> usernamesFromAds(){
+        List<Ad> ads = all();
+        Config config = new Config();
+        MySQLUsersDao usersDao = new MySQLUsersDao(config);
+        List<User> users = usersDao.all();
+        List<String> bucket = new ArrayList<>();
+        List<Integer> bucket1 = new ArrayList<>();
+        for(Ad ad : ads){
+            bucket1.add((int)ad.getUserId() - 1);
+        }
+        for (int userId : bucket1){
+            bucket.add(users.get(userId-1).getUsername());
+        }
+        return bucket1;
     }
 
     @Override
@@ -70,5 +88,14 @@ public class MySQLAdsDao implements Ads {
             ads.add(extractAd(rs));
         }
         return ads;
+    }
+
+    public static void main(String[] args) {
+        Config config = new Config();
+        MySQLAdsDao adsDao = new MySQLAdsDao(config);
+        List<Integer> usersById = adsDao.usernamesFromAds();
+        for(int username : usersById){
+            System.out.println(username);
+        }
     }
 }
